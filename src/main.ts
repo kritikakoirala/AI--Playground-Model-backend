@@ -8,10 +8,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
    app.enableCors({
     origin: [
-      'http://localhost:3001',
+      // 'http://localhost:3001',
       'https://ai-playground-model-frontend.vercel.app/'
-    ], // your Next.js frontend URL
-    credentials: true,              // if using cookies in future
+    ],  
+    methods:'GET,HEAD,PUT,POST,PATCH,DELETE',
+
+    credentials: true,
   });
 
   await app.listen(process.env.PORT ?? 3000);
