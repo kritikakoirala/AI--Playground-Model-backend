@@ -35,6 +35,15 @@ This is the backend for the AI Model Playground built using **NestJS** and **Mon
 
 ---
 
+## Environment Variables
+
+Create a `.env` file in the root directory and define the following variables:
+
+- MONGODB_URI=your_mongodb_connection_string
+- OPENROUTER_API_KEY=your_openai_or_other_api_keys_if_any
+
+---
+
 ## 🚀 Getting Started
 
 ### 📁 Clone the repository
