@@ -7,7 +7,10 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
    app.enableCors({
-    origin: 'http://localhost:3001', // your Next.js frontend URL
+    origin: [
+      'http://localhost:3001',
+      'https://your-frontend.vercel.app'
+    ], // your Next.js frontend URL
     credentials: true,              // if using cookies in future
   });
 
