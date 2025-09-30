@@ -11,13 +11,11 @@ import { ModelsModule } from './models/models.module';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-console.log(process.env.BACKEND_API_URL)
-
 @Module({
   imports: [SessionsModule, 
 
-    MongooseModule.forRoot(`${process.env.MONGODB_URI}`), 
-     MongooseModule.forFeature([{ name: Session.name, schema: SessionSchema }]),
+    MongooseModule.forRoot(`${process.env.MONGODB_URI}`),  // MongoDB root config
+    MongooseModule.forFeature([{ name: Session.name, schema: SessionSchema }]), //MongoDB schema config to the root component
     ModelsModule,
     SessionsModule 
   ],

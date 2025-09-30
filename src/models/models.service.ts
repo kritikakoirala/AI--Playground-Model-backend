@@ -3,17 +3,24 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ModelsService {
+
+  // Headers for the openrouterapi
   private readonly headers = {
     Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
     'Content-Type': 'application/json',
-    // 'HTTP-Referer': 'http://localhost',
     Accept: 'text/event-stream',
   };
 
   private readonly baseUrl = 'https://openrouter.ai/api/v1/chat/completions';
 
-
-  
+  /**
+   * 
+   * @param model The model we are getting the data about
+   * @param prompt The prompt the user inputs
+   * @param onData When the data is being spitted out
+   * @param onComplete When the data is done being spitted out
+   * @param onError When there is error during the flow
+   */
   async streamModel(
     model: string,
     prompt: string,
@@ -39,9 +46,7 @@ export class ModelsService {
         }),
       });
 
-      
-      // console.log("@Response", response)
-
+      // Error handling for when the api connection doesn't work
       if (!response.ok || !response.body) {
         const errorText = await response.text();
         throw new Error(`Failed to connect to model: ${model} - ${errorText}`);
@@ -50,6 +55,7 @@ export class ModelsService {
         throw new Error(`Rate limited for model ${model}: ${errorText}`);
       }
 
+      // This is to parse the data that is being thrown out in chunks
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let fullText = '';
@@ -91,13 +97,11 @@ export class ModelsService {
         costUSD,
       });
     } catch (err) {
-      onError(new Error('Rate limit exceeded again.'));
-       // Send error chunk to frontend via SSE
-      
-
+      onError(new Error('Rate limit exceeded. Either Change the model or try with different prompt.'));
     }
   }
 
+  // Function to calculate the estimated cost taken for the whole process
   estimateCost(model: string, tokens: number): number {
     const costPer1K: Record<string, number> = {
       'mistralai/mixtral-8x7b-instruct': 0.25 / 1000,

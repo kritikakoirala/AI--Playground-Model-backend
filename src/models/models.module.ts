@@ -3,10 +3,8 @@ import { ModelsService } from './models.service';
 import { SessionsModule } from 'src/sessions/sessions.module';
 
 @Module({
-    imports: [forwardRef(() => SessionsModule)],
-
+  imports: [forwardRef(() => SessionsModule)],
   providers: [ModelsService],
-  // controllers: []
   exports:[ModelsService]
 })
 export class ModelsModule {}
