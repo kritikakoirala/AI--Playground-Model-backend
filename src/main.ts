@@ -9,7 +9,7 @@ async function bootstrap() {
    app.enableCors({
     origin: [
       'http://localhost:3001',
-      'https://your-frontend.vercel.app'
+      'https://ai-playground-model-frontend.vercel.app/'
     ], // your Next.js frontend URL
     credentials: true,              // if using cookies in future
   });
